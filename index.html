@@ -731,11 +731,19 @@ document.querySelectorAll('.filtros button').forEach(function(btn){
     capa.hidden=false;
     document.documentElement.style.overflow='hidden';
     irA(idx);
+    if(capa.requestFullscreen){
+      var p=capa.requestFullscreen();
+      if(p&&p.catch){p.catch(function(){});}
+    }
   });});
   function cerrar(){
     capa.hidden=true;
     document.documentElement.style.overflow='';
+    if(document.fullscreenElement&&document.exitFullscreen){document.exitFullscreen();}
   }
+  document.addEventListener('fullscreenchange',function(){
+    if(!document.fullscreenElement&&!capa.hidden){cerrar();}
+  });
   document.getElementById('inmersion-cerrar').addEventListener('click',cerrar);
   capa.addEventListener('click',function(ev){if(ev.target===capa){cerrar();}});
   document.addEventListener('keydown',function(ev){
