@@ -93,7 +93,7 @@ header{background:var(--hueso);border-bottom:1px solid var(--linea);position:sti
 .marca small{display:block;font-family:'Archivo',Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--arcilla-osc)}
 /* Barra flotante de cristal — Glassy Navbar (reel de code.xr), adaptada a la huella de Nuvora */
 header{position:fixed;top:var(--p12);left:0;right:0;z-index:60;display:flex;flex-direction:column;align-items:center;padding-left:var(--p16);padding-right:var(--p16)}
-.glassbar{display:flex;align-items:center;gap:var(--p16);width:100%;max-width:1120px;background:rgba(243,239,232,.78);-webkit-backdrop-filter:blur(16px) saturate(1.5);backdrop-filter:blur(16px) saturate(1.5);border:1px solid rgba(255,255,255,.65);border-radius:999px;box-shadow:0 12px 32px rgba(46,33,26,.18);padding:var(--p8) var(--p12) var(--p8) var(--p16);animation:barraIn .6s ease both}
+.glassbar{display:flex;align-items:center;gap:var(--p16);width:100%;max-width:1120px;background:linear-gradient(135deg,rgba(255,253,249,.62),rgba(243,239,232,.42));-webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);border:1px solid rgba(255,255,255,.85);border-radius:999px;box-shadow:0 12px 32px rgba(46,33,26,.18),inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(46,33,26,.06);padding:var(--p8) var(--p12) var(--p8) var(--p16);animation:barraIn .6s ease both}
 @keyframes barraIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
 .emblema{width:40px;height:40px;border-radius:50%;background:var(--nogal);display:flex;align-items:center;justify-content:center;flex:none}
 .glassbar .marca{font-size:23px}
@@ -101,7 +101,7 @@ header{position:fixed;top:var(--p12);left:0;right:0;z-index:60;display:flex;flex
 .glassbar nav a,.nav-btn{display:inline-flex;align-items:center;gap:var(--p4);padding:10px var(--p16);border-radius:999px;color:var(--nogal);text-decoration:none;font-weight:600;font-size:15px;background:transparent;border:0;cursor:pointer;font-family:inherit;transition:background .18s ease,box-shadow .18s ease}
 .glassbar nav a:hover,.nav-btn:hover,.desplegable.abierto .nav-btn{background:#FFFDF9;box-shadow:0 2px 10px rgba(46,33,26,.12)}
 .desplegable{position:relative}
-.mega{position:absolute;top:calc(100% + 14px);left:50%;transform:translate(-50%,8px);width:min(560px,88vw);background:rgba(250,247,241,.9);-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);border:1px solid rgba(255,255,255,.7);border-radius:24px;box-shadow:0 24px 48px rgba(46,33,26,.22);padding:var(--p24);opacity:0;visibility:hidden;transition:opacity .22s ease,transform .22s ease,visibility .22s}
+.mega{position:absolute;top:calc(100% + 14px);left:50%;transform:translate(-50%,8px);width:min(560px,88vw);background:linear-gradient(135deg,rgba(255,253,249,.72),rgba(250,247,241,.55));-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);border:1px solid rgba(255,255,255,.85);border-radius:24px;box-shadow:0 24px 48px rgba(46,33,26,.22),inset 0 1px 0 rgba(255,255,255,.95);padding:var(--p24);opacity:0;visibility:hidden;transition:opacity .22s ease,transform .22s ease,visibility .22s}
 .desplegable:hover .mega,.desplegable:focus-within .mega,.desplegable.abierto .mega{opacity:1;visibility:visible;transform:translate(-50%,0)}
 .mega-tit{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--nogal-suave);margin-bottom:var(--p12)}
 .mega-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--p8)}
@@ -116,7 +116,7 @@ header{position:fixed;top:var(--p12);left:0;right:0;z-index:60;display:flex;flex
 .btn-llamar{display:inline-flex;align-items:center;gap:var(--p8);background:var(--nogal);color:var(--hueso);border-radius:999px;padding:10px var(--p24);font-weight:700;font-size:15px;text-decoration:none;min-height:44px;flex:none;transition:background .18s ease,transform .18s ease}
 .btn-llamar:hover{background:var(--nogal-suave);transform:translateY(-1px)}
 .hamb{display:none;background:transparent;border:1px solid rgba(46,33,26,.3);border-radius:999px;width:44px;height:44px;align-items:center;justify-content:center;cursor:pointer;color:var(--nogal);flex:none}
-.panel-movil{display:none;width:100%;max-width:1120px;margin-top:var(--p8);background:rgba(250,247,241,.92);-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);border:1px solid rgba(255,255,255,.7);border-radius:24px;box-shadow:0 24px 48px rgba(46,33,26,.22);padding:var(--p16);flex-direction:column;gap:var(--p4)}
+.panel-movil{display:none;width:100%;max-width:1120px;margin-top:var(--p8);background:linear-gradient(135deg,rgba(255,253,249,.75),rgba(250,247,241,.58));-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);border:1px solid rgba(255,255,255,.85);border-radius:24px;box-shadow:0 24px 48px rgba(46,33,26,.22),inset 0 1px 0 rgba(255,255,255,.95);padding:var(--p16);flex-direction:column;gap:var(--p4)}
 .panel-movil.abierto{display:flex}
 .panel-movil a{padding:var(--p12) var(--p16);border-radius:999px;color:var(--nogal);text-decoration:none;font-weight:600;font-size:16px}
 .panel-movil a:hover{background:#FFFDF9}
