@@ -200,7 +200,10 @@ section[id]{scroll-margin-top:112px}
 /* Inmersión: la foto a primer plano */
 .inmersion{position:fixed;inset:0;z-index:90;background:rgba(30,22,17,.97);display:flex;align-items:center;justify-content:center}
 .inmersion[hidden]{display:none}
-.inmersion img{max-width:96vw;max-height:92vh;width:auto;height:auto;border-radius:var(--radio);box-shadow:0 30px 80px rgba(0,0,0,.5);animation:inmersionIn .35s ease}
+.inmersion-ventana{position:absolute;inset:0;overflow:hidden;animation:inmersionIn .35s ease}
+.inmersion-tira{display:flex;height:100%;transition:transform .55s ease}
+.inmersion-slide{flex:0 0 100%;display:flex;align-items:center;justify-content:center;margin:0}
+.inmersion-slide img{max-width:96vw;max-height:88vh;width:auto;height:auto;border-radius:var(--radio);box-shadow:0 30px 80px rgba(0,0,0,.5)}
 @keyframes inmersionIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 .inmersion-nombre{position:absolute;left:0;right:0;bottom:var(--p24);text-align:center;color:var(--hueso);font-family:'Fraunces',Georgia,serif;font-size:28px;font-weight:700;letter-spacing:.02em}
 .inmersion-cerrar{position:absolute;top:var(--p16);right:var(--p16);width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:rgba(250,247,241,.12);color:#FFFDF9;font-size:26px;line-height:1;cursor:pointer;z-index:4}
@@ -286,7 +289,8 @@ footer a{text-decoration:underline}
   *{transition:none !important}
   .etiqueta,.ficha.destacada{animation:none}
   .car-tira{transition:none}
-  .inmersion img{animation:none}
+  .inmersion-ventana{animation:none}
+  .inmersion-tira{transition:none}
 }
 </style>
 </head>
@@ -680,7 +684,14 @@ document.querySelectorAll('.filtros button').forEach(function(btn){
 })();
 </script>
 <div class="inmersion" id="inmersion" hidden role="dialog" aria-modal="true">
-  <img id="inmersion-img" src="imgs/amb-sala.webp" alt="">
+  <div class="inmersion-ventana">
+    <div class="inmersion-tira" id="inmersion-tira">
+      <figure class="inmersion-slide"><img src="imgs/amb-sala.webp" width="880" height="560" alt="Sala montada con sofá, mesa de centro y decoración"></figure>
+      <figure class="inmersion-slide"><img src="imgs/amb-dormitorio.webp" width="880" height="560" alt="Dormitorio montado con cama, burós y lámparas"></figure>
+      <figure class="inmersion-slide"><img src="imgs/amb-comedor.webp" width="880" height="560" alt="Comedor montado con mesa y sillas junto a una ventana"></figure>
+      <figure class="inmersion-slide"><img src="imgs/amb-descanso.webp" width="880" height="560" alt="Dormitorio sereno con cama amplia y colchón cómodo"></figure>
+    </div>
+  </div>
   <p class="inmersion-nombre" id="inmersion-nombre">Sala</p>
   <button type="button" class="inmersion-cerrar" id="inmersion-cerrar" aria-label="Cerrar">×</button>
   <button type="button" class="car-flecha ant" id="inmersion-ant" aria-label="Ambiente anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 6 9 12 15 18"/></svg></button>
@@ -696,7 +707,7 @@ document.querySelectorAll('.filtros button').forEach(function(btn){
   var descs=document.querySelectorAll('.car-desc-item');
   var fotos=tira.querySelectorAll('img');
   var capa=document.getElementById('inmersion');
-  var capaImg=document.getElementById('inmersion-img');
+  var capaTira=document.getElementById('inmersion-tira');
   var capaNombre=document.getElementById('inmersion-nombre');
   var idx=0;
   function irA(i){
@@ -705,9 +716,8 @@ document.querySelectorAll('.filtros button').forEach(function(btn){
     nombres.forEach(function(b,j){b.classList.toggle('activo',j===idx);});
     puntos.forEach(function(b,j){b.classList.toggle('activo',j===idx);});
     descs.forEach(function(p,j){p.classList.toggle('visible',j===idx);});
+    capaTira.style.transform='translateX(-'+(idx*100)+'%)';
     if(!capa.hidden){
-      capaImg.src=fotos[idx].src;
-      capaImg.alt=fotos[idx].alt;
       capaNombre.textContent=nombres[idx].textContent;
     }
   }
