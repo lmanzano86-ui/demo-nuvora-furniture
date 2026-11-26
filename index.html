@@ -176,6 +176,37 @@ section[id]{scroll-margin-top:112px}
 .ambiente img{width:100%;height:auto;transition:transform .45s ease}
 .ambiente:hover img{transform:scale(1.03)}
 .ambiente .amb-datos{padding:var(--espacio-tarjeta);display:flex;flex-direction:column;gap:var(--p8)}
+/* Carrusel de ambientes */
+.car-nombres{display:flex;gap:var(--p8);flex-wrap:wrap;margin-top:var(--espacio-bloque);margin-bottom:var(--p16)}
+.car-nombre{font:inherit;font-weight:700;font-size:15px;min-height:44px;padding:var(--p8) var(--p16);border-radius:999px;border:2px solid var(--nogal);background:transparent;color:var(--nogal);cursor:pointer;transition:transform .18s ease,background .18s ease,color .18s ease}
+.car-nombre:hover{transform:translateY(-2px)}
+.car-nombre.activo{background:var(--nogal);color:var(--hueso)}
+.car-ventana{position:relative;border:6px solid var(--nogal);outline:1px solid var(--linea);outline-offset:6px;border-radius:var(--radio);overflow:hidden;max-width:1120px;margin:0 auto;background:var(--nogal)}
+.car-tira{display:flex;transition:transform .55s ease}
+.car-slide{flex:0 0 100%;margin:0}
+.car-slide img{width:100%;height:auto;display:block;cursor:zoom-in}
+.car-flecha{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.7);background:rgba(250,247,241,.85);color:var(--nogal);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(46,33,26,.3);z-index:3}
+.car-flecha:hover{background:#FFFDF9}
+.car-flecha.ant{left:var(--p12)}
+.car-flecha.sig{right:var(--p12)}
+.car-pie{display:flex;align-items:center;justify-content:space-between;gap:var(--p16);flex-wrap:wrap;margin-top:var(--p16)}
+.car-desc{font-size:17px;line-height:1.6;color:var(--nogal-suave);max-width:640px}
+.car-desc-item{display:none}
+.car-desc-item.visible{display:block}
+.car-puntos{display:flex;gap:var(--p8)}
+.car-punto{width:14px;height:14px;border-radius:50%;border:2px solid var(--nogal);background:transparent;cursor:pointer;padding:0}
+.car-punto.activo{background:var(--arcilla);border-color:var(--arcilla)}
+.car-ayuda{font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--nogal-suave);margin-top:var(--p12)}
+/* Inmersión: la foto a primer plano */
+.inmersion{position:fixed;inset:0;z-index:90;background:rgba(30,22,17,.97);display:flex;align-items:center;justify-content:center}
+.inmersion[hidden]{display:none}
+.inmersion img{max-width:96vw;max-height:92vh;width:auto;height:auto;border-radius:var(--radio);box-shadow:0 30px 80px rgba(0,0,0,.5);animation:inmersionIn .35s ease}
+@keyframes inmersionIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.inmersion-nombre{position:absolute;left:0;right:0;bottom:var(--p24);text-align:center;color:var(--hueso);font-family:'Fraunces',Georgia,serif;font-size:28px;font-weight:700;letter-spacing:.02em}
+.inmersion-cerrar{position:absolute;top:var(--p16);right:var(--p16);width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:rgba(250,247,241,.12);color:#FFFDF9;font-size:26px;line-height:1;cursor:pointer;z-index:4}
+.inmersion .car-flecha{background:rgba(250,247,241,.14);border-color:rgba(255,255,255,.5);color:#FFFDF9;box-shadow:none}
+.inmersion .car-flecha:hover{background:rgba(250,247,241,.3)}
+
 .ambiente h3{font-size:26px}
 .ambiente p{color:var(--nogal-suave);font-size:16px}
 /* Financiamiento */
@@ -254,6 +285,8 @@ footer a{text-decoration:underline}
   html{scroll-behavior:auto}
   *{transition:none !important}
   .etiqueta,.ficha.destacada{animation:none}
+  .car-tira{transition:none}
+  .inmersion img{animation:none}
 }
 </style>
 </head>
@@ -442,35 +475,38 @@ footer a{text-decoration:underline}
   <p class="kicker" data-es="Ambientes" data-en="Rooms">Ambientes</p>
   <h2 data-es="Piensa tu casa por ambientes" data-en="Think of your home room by room">Piensa tu casa por ambientes</h2>
   <p class="sec-intro" data-es="Como en un plano de casa: ambiente por ambiente, hasta que todo combine." data-en="Like a house plan: room by room, until everything matches.">Como en un plano de casa: ambiente por ambiente, hasta que todo combine.</p>
-  <div class="grid-ambientes">
-    <article class="ambiente">
-      <img src="imgs/amb-sala.webp" width="880" height="560" loading="lazy" alt="Sala montada con sofá, mesa de centro y decoración">
-      <div class="amb-datos">
-        <h3 data-es="Sala" data-en="Living room">Sala</h3>
-        <p data-es="Seccionales, sofás, mesas de centro y muebles para TV para el espacio donde más se vive." data-en="Sectionals, sofas, coffee tables and TV stands for the room you live in most.">Seccionales, sofás, mesas de centro y muebles para TV para el espacio donde más se vive.</p>
+  <div class="carrusel" id="carrusel-ambientes">
+    <div class="car-nombres" role="group" aria-label="Elegir ambiente">
+      <button type="button" class="car-nombre activo" data-slide="0" data-es="Sala" data-en="Living room">Sala</button>
+      <button type="button" class="car-nombre" data-slide="1" data-es="Dormitorio" data-en="Bedroom">Dormitorio</button>
+      <button type="button" class="car-nombre" data-slide="2" data-es="Comedor" data-en="Dining room">Comedor</button>
+      <button type="button" class="car-nombre" data-slide="3" data-es="Colchones y descanso" data-en="Mattresses &amp; rest">Colchones y descanso</button>
+    </div>
+    <div class="car-ventana" id="car-ventana">
+      <div class="car-tira" id="car-tira">
+        <figure class="car-slide"><img src="imgs/amb-sala.webp" width="880" height="560" loading="lazy" alt="Sala montada con sofá, mesa de centro y decoración"></figure>
+        <figure class="car-slide"><img src="imgs/amb-dormitorio.webp" width="880" height="560" loading="lazy" alt="Dormitorio montado con cama, burós y lámparas"></figure>
+        <figure class="car-slide"><img src="imgs/amb-comedor.webp" width="880" height="560" loading="lazy" alt="Comedor montado con mesa y sillas junto a una ventana"></figure>
+        <figure class="car-slide"><img src="imgs/amb-descanso.webp" width="880" height="560" loading="lazy" alt="Dormitorio sereno con cama amplia y colchón cómodo"></figure>
       </div>
-    </article>
-    <article class="ambiente">
-      <img src="imgs/amb-dormitorio.webp" width="880" height="560" loading="lazy" alt="Dormitorio montado con cama, burós y lámparas">
-      <div class="amb-datos">
-        <h3 data-es="Dormitorio" data-en="Bedroom">Dormitorio</h3>
-        <p data-es="Recámaras completas y piezas sueltas para que tu cuarto se vea y se sienta nuevo." data-en="Complete bedroom sets and single pieces to make your room look and feel new.">Recámaras completas y piezas sueltas para que tu cuarto se vea y se sienta nuevo.</p>
+      <button type="button" class="car-flecha ant" id="car-ant" aria-label="Ambiente anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 6 9 12 15 18"/></svg></button>
+      <button type="button" class="car-flecha sig" id="car-sig" aria-label="Ambiente siguiente"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg></button>
+    </div>
+    <div class="car-pie">
+      <div class="car-desc">
+        <p class="car-desc-item visible" data-es="Seccionales, sofás, mesas de centro y muebles para TV para el espacio donde más se vive." data-en="Sectionals, sofas, coffee tables and TV stands for the room you live in most.">Seccionales, sofás, mesas de centro y muebles para TV para el espacio donde más se vive.</p>
+        <p class="car-desc-item" data-es="Recámaras completas y piezas sueltas para que tu cuarto se vea y se sienta nuevo." data-en="Complete bedroom sets and single pieces to make your room look and feel new.">Recámaras completas y piezas sueltas para que tu cuarto se vea y se sienta nuevo.</p>
+        <p class="car-desc-item" data-es="Mesas y sillas para 4, 6 o más personas: el lugar donde la familia se sienta a conversar." data-en="Tables and chairs for 4, 6 or more people: the place where the family sits down to talk.">Mesas y sillas para 4, 6 o más personas: el lugar donde la familia se sienta a conversar.</p>
+        <p class="car-desc-item" data-es="Colchones en varios tamaños y firmezas, y sillones reclinables para descansar de verdad." data-en="Mattresses in several sizes and firmness levels, and recliners for real rest.">Colchones en varios tamaños y firmezas, y sillones reclinables para descansar de verdad.</p>
       </div>
-    </article>
-    <article class="ambiente">
-      <img src="imgs/amb-comedor.webp" width="880" height="560" loading="lazy" alt="Comedor montado con mesa y sillas junto a una ventana">
-      <div class="amb-datos">
-        <h3 data-es="Comedor" data-en="Dining room">Comedor</h3>
-        <p data-es="Mesas y sillas para 4, 6 o más personas: el lugar donde la familia se sienta a conversar." data-en="Tables and chairs for 4, 6 or more people: the place where the family sits down to talk.">Mesas y sillas para 4, 6 o más personas: el lugar donde la familia se sienta a conversar.</p>
+      <div class="car-puntos" id="car-puntos">
+        <button type="button" class="car-punto activo" data-slide="0" aria-label="Ver Sala"></button>
+        <button type="button" class="car-punto" data-slide="1" aria-label="Ver Dormitorio"></button>
+        <button type="button" class="car-punto" data-slide="2" aria-label="Ver Comedor"></button>
+        <button type="button" class="car-punto" data-slide="3" aria-label="Ver Colchones y descanso"></button>
       </div>
-    </article>
-    <article class="ambiente">
-      <img src="imgs/amb-descanso.webp" width="880" height="560" loading="lazy" alt="Dormitorio sereno con cama amplia y colchón cómodo">
-      <div class="amb-datos">
-        <h3 data-es="Colchones y descanso" data-en="Mattresses &amp; rest">Colchones y descanso</h3>
-        <p data-es="Colchones en varios tamaños y firmezas, y sillones reclinables para descansar de verdad." data-en="Mattresses in several sizes and firmness levels, and recliners for real rest.">Colchones en varios tamaños y firmezas, y sillones reclinables para descansar de verdad.</p>
-      </div>
-    </article>
+    </div>
+    <p class="car-ayuda" data-es="Toca la foto para verla en grande · desliza para cambiar de ambiente" data-en="Tap the photo to see it full screen · swipe to switch rooms">Toca la foto para verla en grande · desliza para cambiar de ambiente</p>
   </div>
 </section>
 
@@ -641,6 +677,76 @@ document.querySelectorAll('.filtros button').forEach(function(btn){
       a.addEventListener('click', function(){ panel.classList.remove('abierto'); btnMenu.setAttribute('aria-expanded','false'); });
     });
   }
+})();
+</script>
+<div class="inmersion" id="inmersion" hidden role="dialog" aria-modal="true">
+  <img id="inmersion-img" src="imgs/amb-sala.webp" alt="">
+  <p class="inmersion-nombre" id="inmersion-nombre">Sala</p>
+  <button type="button" class="inmersion-cerrar" id="inmersion-cerrar" aria-label="Cerrar">×</button>
+  <button type="button" class="car-flecha ant" id="inmersion-ant" aria-label="Ambiente anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 6 9 12 15 18"/></svg></button>
+  <button type="button" class="car-flecha sig" id="inmersion-sig" aria-label="Ambiente siguiente"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg></button>
+</div>
+<script>
+(function(){
+  var tira=document.getElementById('car-tira');
+  if(!tira){return;}
+  var slides=tira.children.length;
+  var nombres=document.querySelectorAll('.car-nombre');
+  var puntos=document.querySelectorAll('.car-punto');
+  var descs=document.querySelectorAll('.car-desc-item');
+  var fotos=tira.querySelectorAll('img');
+  var capa=document.getElementById('inmersion');
+  var capaImg=document.getElementById('inmersion-img');
+  var capaNombre=document.getElementById('inmersion-nombre');
+  var idx=0;
+  function irA(i){
+    idx=((i%slides)+slides)%slides;
+    tira.style.transform='translateX(-'+(idx*100)+'%)';
+    nombres.forEach(function(b,j){b.classList.toggle('activo',j===idx);});
+    puntos.forEach(function(b,j){b.classList.toggle('activo',j===idx);});
+    descs.forEach(function(p,j){p.classList.toggle('visible',j===idx);});
+    if(!capa.hidden){
+      capaImg.src=fotos[idx].src;
+      capaImg.alt=fotos[idx].alt;
+      capaNombre.textContent=nombres[idx].textContent;
+    }
+  }
+  nombres.forEach(function(b){b.addEventListener('click',function(){irA(+b.dataset.slide);});});
+  puntos.forEach(function(b){b.addEventListener('click',function(){irA(+b.dataset.slide);});});
+  document.getElementById('car-ant').addEventListener('click',function(){irA(idx-1);});
+  document.getElementById('car-sig').addEventListener('click',function(){irA(idx+1);});
+  document.getElementById('inmersion-ant').addEventListener('click',function(){irA(idx-1);});
+  document.getElementById('inmersion-sig').addEventListener('click',function(){irA(idx+1);});
+  fotos.forEach(function(img){img.addEventListener('click',function(){
+    capa.hidden=false;
+    document.documentElement.style.overflow='hidden';
+    irA(idx);
+  });});
+  function cerrar(){
+    capa.hidden=true;
+    document.documentElement.style.overflow='';
+  }
+  document.getElementById('inmersion-cerrar').addEventListener('click',cerrar);
+  capa.addEventListener('click',function(ev){if(ev.target===capa){cerrar();}});
+  document.addEventListener('keydown',function(ev){
+    if(capa.hidden){return;}
+    if(ev.key==='Escape'){cerrar();}
+    if(ev.key==='ArrowLeft'){irA(idx-1);}
+    if(ev.key==='ArrowRight'){irA(idx+1);}
+  });
+  function deslizar(el,alDeslizar){
+    var x0=null,y0=null;
+    el.addEventListener('touchstart',function(ev){x0=ev.touches[0].clientX;y0=ev.touches[0].clientY;},{passive:true});
+    el.addEventListener('touchend',function(ev){
+      if(x0===null){return;}
+      var dx=ev.changedTouches[0].clientX-x0;
+      var dy=ev.changedTouches[0].clientY-y0;
+      if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)){alDeslizar(dx<0?1:-1);}
+      x0=null;
+    },{passive:true});
+  }
+  deslizar(document.getElementById('car-ventana'),function(d){irA(idx+d);});
+  deslizar(capa,function(d){irA(idx+d);});
 })();
 </script>
 </body>
