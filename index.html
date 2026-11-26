@@ -311,9 +311,9 @@ footer a{text-decoration:underline}
   </div>
   <figure class="hero-foto">
     <img src="imgs/hero.webp" width="1200" height="800" fetchpriority="high" alt="Sala montada con seccional claro, mesa de centro y cojines en una tienda de muebles">
-    <a class="etiqueta tag1" href="#prod-seccional"><small data-es="Seccional" data-en="Sectional">Seccional</small> $1,199</a>
-    <a class="etiqueta tag2" href="#prod-sofa"><small data-es="Sofá" data-en="Sofa">Sofá</small> $999</a>
-    <a class="etiqueta tag3" href="#prod-mesa"><small data-es="Mesa de centro" data-en="Coffee table">Mesa de centro</small> $349</a>
+    <a class="etiqueta tag1" href="https://puntoready.newageprosystem.com/t/nuvora-furniture/p/a0cf94dd-8d6b-4f0d-b778-408bfc1c10ec"><small data-es="Seccional" data-en="Sectional">Seccional</small> $1,199</a>
+    <a class="etiqueta tag2" href="https://puntoready.newageprosystem.com/t/nuvora-furniture/p/72ee98c5-17ef-497f-8ef6-ad722e0b70cd"><small data-es="Sofá" data-en="Sofa">Sofá</small> $999</a>
+    <a class="etiqueta tag3" href="https://puntoready.newageprosystem.com/t/nuvora-furniture/p/a7943207-61de-41b6-bb5e-c88865fd06f6"><small data-es="Mesa de centro" data-en="Coffee table">Mesa de centro</small> $349</a>
   </figure>
   <p class="hero-nota" data-es="Foto y precios de muestra — toca un precio para ver el mueble en la tienda." data-en="Sample photo and prices — tap a price to see the piece in the store.">Foto y precios de muestra — toca un precio para ver el mueble en la tienda.</p>
 </div>
@@ -642,22 +642,6 @@ document.querySelectorAll('.filtros button').forEach(function(btn){
     });
   }
 })();
-</script>
-<script>
-document.querySelectorAll('.etiqueta[href^="#prod-"]').forEach(function(et){
-  et.addEventListener('click',function(ev){
-    ev.preventDefault();
-    var destino=document.getElementById(et.getAttribute('href').slice(1));
-    if(!destino){return;}
-    var todos=document.querySelector('.filtros button[data-filtro="todos"]');
-    if(todos && !todos.classList.contains('activo')){todos.click();}
-    destino.scrollIntoView({behavior:'smooth',block:'center'});
-    window.setTimeout(function(){
-      destino.classList.add('destacada');
-      window.setTimeout(function(){destino.classList.remove('destacada');},2500);
-    },500);
-  });
-});
 </script>
 </body>
 </html>
